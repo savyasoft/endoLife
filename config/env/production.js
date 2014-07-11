@@ -5,7 +5,7 @@ module.exports = {
   //heroku config
     db: 'mongodb://heroku_app27299523:1ef74jkp3b36cnapeaopiu2cdn@ds041218.mongolab.com:41218/heroku_app27299523',
     app: {
-        name: 'Endo Life - Production'
+        name: 'EndoLife'
     },
     facebook: {
         clientID: 'APP_ID',
