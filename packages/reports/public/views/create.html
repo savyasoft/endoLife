@@ -1,0 +1,43 @@
+<section data-ng-controller="ReportsController" >
+    <form name="reportForm" class="form-horizontal col-md-6" role="form" data-ng-init="" data-ng-submit="create(reportForm.$valid)" novalidate>
+        <div class="form-group"  ng-class="{ 'has-error' : submitted && reportForm.type.$invalid }">
+            <label  class="col-md-3 control-label">Type</label>
+            <div class="col-md-9">
+               <select class="form-control" name="type" ng-model="report.reportType.type" id="type" ng-options="rtype for rtype in rTypes "  ng-change="setType(report.reportType.type)"   required >
+                <option value="">select Type</option>                                                       
+               </select>                
+                <div ng-show="submitted && reportForm.type.$invalid" class="help-block">
+                    <p ng-show="reportForm.type.$error.required">Title is required</p>
+                </div>
+            </div>
+            </div>
+            <div class="form-group"  data-ng-show='report.reportType.type'  ng-class="{ 'has-error' : submitted && reportForm.title.$invalid }">
+            <label  class="col-md-3 control-label">Title</label>
+            <div class="col-md-9">
+               <select class="form-control" name="title" id="title"  ng-model="report.reportType.title" ng-options="rtitle for rtitle in rtitles"  ng-change="setTitle(report.reportType.title)"  required >
+                                                     
+                  <option value="">Select Title</option>
+                </select>  
+  
+            <div ng-show="submitted && reportForm.title.$invalid" class="help-block">
+                    <p ng-show="reportForm.title.$error.required">Title is required</p>
+                </div>
+            </div>
+        </div>
+        <div class="form-group"  data-ng-show='(report.reportType.type && report.reportType.title)' ng-class="{ 'has-error' : submitted && reportForm.value.$invalid }">
+            <label  for="content" class="col-md-3 control-label">Value</label>
+            <div class="col-md-9">
+                <input name="value"  type="number" class="form-control" ng-model="report.value"  id="value" placeholder="Value" required>
+                 <div ng-show="submitted && reportForm.value.$invalid" class="help-block">
+                    <p ng-show="reportForm.value.$error.required">Value is required</p>                    
+                </div>
+            </div>
+        </div>
+       
+        <div class="form-group">
+            <div class="col-md-offset-3 col-md-9">
+                <button type="submit" class="btn btn-info">Submit</button>
+            </div>
+        </div>
+    </form>
+</section>

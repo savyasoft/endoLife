@@ -1,0 +1,41 @@
+<section data-ng-controller="ReportsController" data-ng-init="find()">
+   <div class="col-md-4"><input  class="form-control" placeholder="search reports" ng-model='searchReport' /></div>
+   <br>
+   <br/>
+   <table class="table table-bordered">
+   	 <tr><th>user</th><th>Type</th><th>Title</th><th>value</th><th></th><th></th></tr>
+	 <tr data-ng-repeat="report in reports | filter: {reportType:searchReport}">
+	 	<td>{{report.user.name}}</td>
+		<td>{{report.reportType.type}}</td>
+		<td>{{report.reportType.title}}</td>
+		<td>{{report.value}}</td>
+		<td><a class="btn" href="/#!/reports/{{report._id}}/edit">
+                        <i class="glyphicon glyphicon-edit"></i>
+            </a>
+		</td>
+		<td><a class="btn" data-ng-click="remove(report);">
+                        <i class="glyphicon glyphicon-trash"></i>
+                    </a>
+		</td>
+	 </tr>
+   </table>
+    <!--<ul class="reports unstyled">
+        <li data-ng-repeat="report in reports |filter:searchReport">
+            <span>{{report.created | date:'medium'}}</span> /
+            <span>{{report.user.name}}</span>
+            <h2>
+                <a data-ng-href="#!/reports/{{report._id}}">{{report.reportType.type}} -- {{report.reportType.title}}</a>
+                <span data-ng-if="hasAuthorization(report)">
+                    <a class="btn" href="/#!/reports/{{report._id}}/edit">
+                        <i class="glyphicon glyphicon-edit"></i>
+                    </a>
+                    <a class="btn" data-ng-click="remove(report);">
+                        <i class="glyphicon glyphicon-trash"></i>
+                    </a>
+                </span>
+            </h2>
+            <div>{{report.value}}</div>
+        </li>
+    </ul>-->
+    <h1 data-ng-hide="!reports || reports.length">No reports yet. <br> Why don't you <a href="/#!/reports/create">Create One</a>?</h1>
+</section>

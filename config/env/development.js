@@ -1,9 +1,11 @@
 'use strict';
 
 module.exports = {
-    db: 'mongodb://localhost/mean-dev',
+  //  db: 'mongodb://localhost/mean-dev',
+  //heroku config
+    db: 'mongodb://savya2014:komala01@dbh63.mongolab.com:27637/heroku_app26460942',
     app: {
-        name: 'MEAN - FullStack JS - Development'
+        name: 'EndoLife - Development'
     },
     facebook: {
         clientID: 'APP_ID',

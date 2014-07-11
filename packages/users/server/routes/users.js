@@ -7,12 +7,40 @@ module.exports = function(MeanUser, app, auth, database, passport) {
 
     app.route('/logout')
         .get(users.signout);
+
+    app.route('/logoutapp')
+        .post(users.signoutapp);
+
     app.route('/users/me')
         .get(users.me);
 
-    // Setting up the users api
+    app.route('/updateUser/:userId/:token')
+        .get(auth.requiresToken,users.me)
+        .put(auth.requiresToken,users.update);                   
+
+    // Setting up the users api -- added the call back function for the mobile application
     app.route('/register')
-        .post(users.create);
+        .post(users.create, function(req, res) {
+            console.log(req.body.email);
+            console.log(req.user);
+            if(!!req.body.email){
+                users.login(req, function(err,user){
+                         if (user)
+                            res.send({
+                                user: user,
+                                redirect: (req.user.roles.indexOf('admin') !== -1) ? req.get('referer') : false
+                            });
+
+                     });
+            }else {
+                    res.send({
+                         user: req.user,
+                         redirect: (req.user.roles.indexOf('admin') !== -1) ? req.get('referer') : false
+                    });
+
+            }
+       });
+//        .post(users.create); 
 
     app.route('/forgot-password')
         .post(users.forgotpassword);
@@ -23,15 +51,41 @@ module.exports = function(MeanUser, app, auth, database, passport) {
     // Setting up the userId param
     app.param('userId', users.user);
 
-    // AngularJS route to check for authentication
+    // AngularJS route to check for authentication -- updated for the mobile app to receive the params
     app.route('/loggedin')
         .get(function(req, res) {
-            res.send(req.isAuthenticated() ? req.user : '0');
+            if(req.isAuthenticated()) res.send(req.user);
+            else if(req.query.id && auth.requiresToken) res.send(req.user);
+            else res.send('0');
         });
 
-    // Setting the local strategy route
+    /*    .get(function(req, res) {
+            res.send(req.isAuthenticated() ? req.user : '0');
+        });
+*/
+    // Setting the local strategy route -- updated again for the mobile app
     app.route('/login')
         .post(passport.authenticate('local', {
+            failureFlash: true
+        }), function(req, res) {
+            if(!!req.body.email){
+                users.login(req, function(err,user){
+                         if (user)
+                            res.send({
+                                user: user,
+                                redirect: (req.user.roles.indexOf('admin') !== -1) ? req.get('referer') : false
+                            });
+
+                     });
+            }else {
+                    res.send({
+                         user: req.user,
+                         redirect: (req.user.roles.indexOf('admin') !== -1) ? req.get('referer') : false
+                    });
+
+            }
+       });
+/*        .post(passport.authenticate('local', {
             failureFlash: true
         }), function(req, res) {
             res.send({
@@ -39,7 +93,7 @@ module.exports = function(MeanUser, app, auth, database, passport) {
                 redirect: (req.user.roles.indexOf('admin') !== -1) ? req.get('referer') : false
             });
         });
-
+*/
     // Setting the facebook oauth routes
     app.route('/auth/facebook')
         .get(passport.authenticate('facebook', {

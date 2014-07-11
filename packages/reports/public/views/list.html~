@@ -1,0 +1,21 @@
+<section data-ng-controller="ReportsController" data-ng-init="find()">
+    <ul class="reports unstyled">
+        <li data-ng-repeat="report in reports">
+            <span>{{report.created | date:'medium'}}</span> /
+            <span>{{report.user.name}}</span>
+            <h2>
+                <a data-ng-href="#!/reports/{{report._id}}">{{report.repotType.type}} -- {{report.reportType.title}}</a>
+                <span data-ng-if="hasAuthorization(report)">
+                    <a class="btn" href="/#!/reports/{{report._id}}/edit">
+                        <i class="glyphicon glyphicon-edit"></i>
+                    </a>
+                    <a class="btn" data-ng-click="remove(report);">
+                        <i class="glyphicon glyphicon-trash"></i>
+                    </a>
+                </span>
+            </h2>
+            <div>{{report.value}}</div>
+        </li>
+    </ul>
+    <h1 data-ng-hide="!reports || reports.length">No reports yet. <br> Why don't you <a href="/#!/reports/create">Create One</a>?</h1>
+</section>

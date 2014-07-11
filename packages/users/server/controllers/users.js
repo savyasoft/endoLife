@@ -11,6 +11,14 @@ var mongoose = require('mongoose'),
     nodemailer = require('nodemailer'),
     templates = require('../template');
 
+var jwt = require('jwt-simple');
+
+var generateToken = function(payl, sec){
+    var payload = {foo:payl};
+    var secret = sec.toString();
+    return jwt.encode(payload, secret);
+};
+
 /**
  * Auth callback
  */
@@ -27,6 +35,52 @@ exports.signin = function(req, res) {
     }
     res.redirect('#!/login');
 };
+/**
+ * Do login
+ */
+exports.login = function(req, done) {
+     console.log('in login');
+    User
+        .findOne({
+            email: req.body.email
+        })
+        .exec(function(err, user) {
+            if (err) console.log(err);
+            var jwtv= generateToken(req.body.password,Date.now().valueOf());
+            var createdAtv=Date.now().valueOf();
+            user.token = {jwt:jwtv, createdAt:createdAtv};
+        //    console.log(user);
+            user.save(function(err){
+               if (err) done(err,null) ;
+               else {req.user=user; done(null,user);}
+            });
+        });
+
+};
+
+/**
+ * Logout from the mobile app
+ */
+var clearToken = function(req,done) {
+    console.log('inside the clearToken');
+    User
+        .findOne({
+            _id: req.body.id
+        })
+        .exec(function(err, user) {
+            if (err) console.log(err);
+            else {
+              user.token = {jwt:'',createdAt:''};
+              console.log(user);
+              user.save(function(err){
+                console.log('inside user save');
+               if (err)  { done(err,null);}
+
+               else  done(null,user);
+              });
+            }
+        });
+};
 
 /**
  * Logout
@@ -34,6 +88,28 @@ exports.signin = function(req, res) {
 exports.signout = function(req, res) {
     req.logout();
     res.redirect('/');
+};
+
+/**
+ * Logout from the mobile app
+ */
+exports.signoutapp = function(req, res) {
+    if(!!req.body.id) {
+               clearToken(req,function(err,user){
+                   if(err) res.status(400).send(err); 
+                   else {
+                     console.log(user);
+                     req.logout();
+                     res.send({message:'success'});
+                   }
+               });
+            }
+            else {
+                req.logout();
+                res.send({message:'success'});
+            }
+   // req.logout();
+   // res.redirect('/');
 };
 
 /**
@@ -63,6 +139,10 @@ exports.create = function(req, res, next) {
         return res.status(400).send(errors);
     }
 
+    var jwtv= generateToken(req.body.password,Date.now().valueOf());
+    var createdAtv=Date.now().valueOf();
+    user.token = {jwt:jwtv, createdAt:createdAtv};
+    console.log(user.token);
     // Hard coded for now. Will address this with the user permissions system in v0.3.5
     user.roles = ['authenticated'];
     user.save(function(err) {
@@ -233,4 +313,23 @@ exports.forgotpassword = function(req, res, next) {
             res.json(response);
         }
     );
+};
+
+
+// update user profile
+exports.update = function (req,res){
+    console.log('in users update');
+  //  console.log(req.body);
+    var user = req.body;
+       delete user._id;
+       delete user.token;
+       delete user.provide;
+       delete user.roles;
+       
+  User.update({_id: req.user._id},{$set:user},function (err,results){
+     if(!err) 
+     res.send({message:'success'});      
+     else console.log(err);
+  });
+
 };

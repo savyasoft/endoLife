@@ -55,7 +55,19 @@ var UserSchema = new Schema({
         type: String,
         default: 'local'
     },
+    token:{
+        jwt: {
+               type: String
+        },
+        createdAt:{       
+               type: String   
+        }
+    },
     salt: String,
+    address:String,
+    bloodGroup:String,
+    phoneNumber:String,
+    card:String,
     resetPasswordToken: String,
     resetPasswordExpires: Date,
     facebook: {},
@@ -100,6 +112,24 @@ UserSchema.methods = {
     hasRole: function(role) {
         var roles = this.roles;
         return roles.indexOf('admin') !== -1 || roles.indexOf(role) !== -1;
+    },
+
+    // hasToken method
+
+     hasToken: function() {
+         return !! this.token.jwt;
+    },
+
+    
+    /**
+     * getToken- check if the user has required token
+     *
+     * @param none
+     * @return {Boolean}
+     * @api public
+     */
+    getToken: function() {
+         return this.token.jwt;
     },
 
     /**
