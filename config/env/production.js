@@ -3,7 +3,7 @@
 module.exports = {
     //  db: 'mongodb://localhost/mean-dev',
   //heroku config
-    db: 'mongodb://savya2014:komala01@dbh63.mongolab.com:27637/heroku_app26460942',
+    db: 'mongodb://savya2014:komala01@ds027709.mongolab.com:27709/heroku_app27299523',
     app: {
         name: 'Endo Life - Production'
     },
