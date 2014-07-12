@@ -3,24 +3,26 @@
         <div class="form-group" ng-class="{ 'has-error' : submitted && reportForm.type.$invalid }">
             <label mean-token="'report-type'" for="type" class="col-md-2 control-label">Type</label>
             <div class="col-md-10">                
-                <select class="form-control" name="type" id="type" ng-model="report.reportType.type" ng-options="rtype for rtype in rTypes"  required>                  
+                <select class="form-control" name="type" id="type" ng-model="report.reportType.type" ng-options="rtype for rtype in rTypes" ng-change="setType(report.reportType.type)"  required>
+                <option value="">select Type</option>                  
                </select>                
                 <div ng-show="submitted && reportForm.type.$invalid" class="help-block">
                     <p ng-show="reportForm.type.$error.required">Title is required</p>
                 </div>
             </div>
         </div>
-        <div class="form-group" ng-class="{ 'has-error' : submitted && reportForm.title.$invalid }" ng-click="alert(report.reportType);">
+        <div class="form-group" data-ng-show='report.reportType.type'  ng-class="{ 'has-error' : submitted && reportForm.title.$invalid }">
             <label mean-token="'report-title'" for="title" class="col-md-2 control-label">Title</label>
             <div class="col-md-10">                
-            <select class="form-control" name="title" id="title"  ng-model="report.reportType.title"  ng-options="rtype for rtype in reportTypes[report.reportType.type]" required>                              
+            <select class="form-control" name="title" id="title"  ng-model="report.reportType.title"  ng-options="rtitle for rtitle in rtitles"  ng-change="setTitle(report.reportType.title)" required>
+            <option value="">select Title</option>                              
             </select>                                                  
                 <div ng-show="submitted && reportForm.title.$invalid" class="help-block">
                     <p ng-show="reportForm.title.$error.required">Value is required</p>
                 </div>
             </div>
         </div>
-       <div class="form-group" ng-class="{ 'has-error' : submitted && reportForm.value.$invalid }">
+       <div class="form-group" data-ng-show='(report.reportType.type && report.reportType.title)'  ng-class="{ 'has-error' : submitted && reportForm.value.$invalid }">
             <label mean-token="'report-value'" for="value" class="col-md-2 control-label">Value</label>
             <div class="col-md-10">
       <input name="value" type="number" ng-model="report.value" id="value" cols="30" rows="10" placeholder="Value" class="form-control" required></input>                  

@@ -1,5 +1,26 @@
 <section data-ng-controller="ReportTypesController" data-ng-init="find()">
-    <ul class="reports unstyled">
+    <div class="col-md-4"><input  class="form-control" placeholder="search report types" ng-model='searchReport' /></div>
+   <br />
+   <br/>
+   
+    <table class="table table-bordered">
+   	 <tr><th>user</th><th>Type</th><th>Title</th><th>Range(from-to)</th><th>updated</th><th>edit/remove</th></tr>
+	 <tr data-ng-repeat="reportType in reportTypes | filter:searchReport">
+	 	<td>{{reportType.user.name}}</td>
+		<td>{{reportType.type}}</td>
+		<td>{{reportType.title}}</td>
+		<td>{{reportType.range.from}} - {{reportType.range.to }}</td>
+		<td>{{reportType.created | date:'medium'}}</td>
+		<td><span><a class="btn" href="#!/reportType/{{reportType._id}}/edit">
+                        <i class="glyphicon glyphicon-edit"></i>
+            </a>/<a class="btn" data-ng-click="remove(reportType);">
+                        <i class="glyphicon glyphicon-trash"></i>
+                    </a></span>
+		</td>
+	 </tr>
+   </table>
+   
+    <!--<ul class="reports unstyled">
         <li data-ng-repeat="reporttype in reportTypes">
             <span>{{reporttype.created | date:'medium'}}</span> 
             <span>{{reporttype.type}}</span>
@@ -17,6 +38,6 @@
             <div>From:{{reporttype.range.from}} | To:{{reporttype.range.to}}
             </div>
         </li>
-    </ul>
-    <h1 data-ng-hide="!reports || reports.length">No reports yet. <br> Why don't you <a href="/#!/reports/create">Create One</a>?</h1>
+    </ul>-->
+    <h1 data-ng-hide="reportTypes || reportTypess.length">No report types yet. <br> Why don't you <a href="/#!/reports/createReportType">Create One</a>?</h1>
 </section>

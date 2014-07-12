@@ -48,6 +48,7 @@ angular.module('mean').controller('ReportsController', ['$scope', '$stateParams'
                  
          
         $scope.create = function(isValid) {
+        	  if(!$scope.report._id){
             if (isValid) {               
                 var report = new Reports($scope.report);
                 this.title = '';
@@ -60,6 +61,9 @@ angular.module('mean').controller('ReportsController', ['$scope', '$stateParams'
             } else {
                 $scope.submitted = true;
             }
+        
+          }else
+           $scope.update(isValid);
         };
 
         $scope.remove = function(report) {
@@ -73,11 +77,11 @@ angular.module('mean').controller('ReportsController', ['$scope', '$stateParams'
                 }
                });
 
-/*                for (var i in $scope.reports) {
+                for (var i in $scope.reports) {
                     if ($scope.reports[i] === report) {
                         $scope.reports.splice(i, 1);
                     }
-                }*/
+                }
             //$location.path('reports');
             } else {
                 $scope.report.$remove(function(response) {
@@ -89,10 +93,10 @@ angular.module('mean').controller('ReportsController', ['$scope', '$stateParams'
         $scope.update = function(isValid) {
             if (isValid) {
                 var report = $scope.report;
-        /*        if (!report.updated) {
+                if (!report.updated) {
                     report.updated = [];
                 }
-                report.updated.push(new Date().getTime());*/
+           //     report.updated.push(new Date().getTime());
 
                 report.$update(function() {
                     $location.path('reports/' + report._id);
@@ -111,11 +115,14 @@ angular.module('mean').controller('ReportsController', ['$scope', '$stateParams'
         };
 
         $scope.findOne = function() {
+        	if($stateParams.reportId){
             Reports.get({
                 reportId: $stateParams.reportId
             }, function(report) {            	
                 $scope.report = report;
+                 $scope.rtitles = $scope.reportTypes[report.reportType.type];        	 
             });
+         }
         };
         
       /*  $scope.reporttypes = function () {

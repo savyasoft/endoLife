@@ -1,21 +1,20 @@
 <section data-ng-controller="ReportsController" data-ng-init="find()">
    <div class="col-md-4"><input  class="form-control" placeholder="search reports" ng-model='searchReport' /></div>
-   <br>
+   <br />
    <br/>
    <table class="table table-bordered">
-   	 <tr><th>user</th><th>Type</th><th>Title</th><th>value</th><th></th><th></th></tr>
-	 <tr data-ng-repeat="report in reports | filter: {reportType:searchReport}">
+   	 <tr><th>user</th><th>Type</th><th>Title</th><th>value</th><th>updated</th><th>edit/remove</th></tr>
+	 <tr data-ng-repeat="report in reports | filter: {user:searchReport}">
 	 	<td>{{report.user.name}}</td>
-		<td>{{report.reportType.type}}</td>
-		<td>{{report.reportType.title}}</td>
+		<td><a href="#!/reports/{{report._id}}">{{report.reportType.type}}</a></td>
+		<td><a href="#!/reports/{{report._id}}">{{report.reportType.title}}</a></td>
 		<td>{{report.value}}</td>
-		<td><a class="btn" href="/#!/reports/{{report._id}}/edit">
+		<td>{{report.updated | date:'medium'}}</td>
+		<td><span><a class="btn" href="/#!/reports/{{report._id}}/edit">
                         <i class="glyphicon glyphicon-edit"></i>
-            </a>
-		</td>
-		<td><a class="btn" data-ng-click="remove(report);">
+            </a>/<a class="btn" data-ng-click="remove(report);">
                         <i class="glyphicon glyphicon-trash"></i>
-                    </a>
+                    </a></span>
 		</td>
 	 </tr>
    </table>

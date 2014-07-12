@@ -80,7 +80,7 @@ angular.module('mean').config(['$stateProvider',
             })
             .state('edit report', {
                 url: '/reports/:reportId/edit',
-                templateUrl: 'reports/views/edit.html',
+                templateUrl: 'reports/views/create.html',
                 resolve: {
                     loggedin: checkLoggedin
                 }

@@ -96,6 +96,7 @@ exports.show = function (req,res) {
 exports.update = function (req,res) {
 	 var reportType = req.reportType;
     reportType = _.extend(reportType, req.body);    
+    reportType.created = Date.now();
     reportType.save(function(err) {
         if (err) {
 	    return res.jsonp(500,{

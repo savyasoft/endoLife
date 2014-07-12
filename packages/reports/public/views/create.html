@@ -1,5 +1,5 @@
 <section data-ng-controller="ReportsController" >
-    <form name="reportForm" class="form-horizontal col-md-6" role="form" data-ng-init="" data-ng-submit="create(reportForm.$valid)" novalidate>
+    <form name="reportForm" class="form-horizontal col-md-6" role="form" data-ng-init="findOne()" data-ng-submit="create(reportForm.$valid)" novalidate>
         <div class="form-group"  ng-class="{ 'has-error' : submitted && reportForm.type.$invalid }">
             <label  class="col-md-3 control-label">Type</label>
             <div class="col-md-9">
