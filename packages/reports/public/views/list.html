@@ -1,23 +1,38 @@
 <section data-ng-controller="ReportsController" data-ng-init="find()">
-   <div class="col-md-4"><input  class="form-control" placeholder="search reports" ng-model='searchReport' /></div>
-   <br />
-   <br/>
-   <table class="table table-bordered">
-   	 <tr><th>user</th><th>Type</th><th>Title</th><th>value</th><th>updated</th><th>edit/remove</th></tr>
-	 <tr data-ng-repeat="report in reports | filter: {user:searchReport}">
-	 	<td>{{report.user.name}}</td>
-		<td><a href="#!/reports/{{report._id}}">{{report.reportType.type}}</a></td>
-		<td><a href="#!/reports/{{report._id}}">{{report.reportType.title}}</a></td>
-		<td>{{report.value}}</td>
-		<td>{{report.updated | date:'medium'}}</td>
-		<td><span><a class="btn" href="/#!/reports/{{report._id}}/edit">
+    <div class="col-md-4">
+        <input class="form-control" placeholder="search reports" ng-model='searchReport' />
+    </div>
+    <br />
+    <br/>
+    <table class="table table-bordered">
+        <tr>
+            <th>user</th>
+            <th>Type</th>
+            <th>Title</th>
+            <th>value</th>
+            <th>updated</th>
+            <th>edit/remove</th>
+        </tr>
+        <tr data-ng-repeat="report in reports | filter: {user:searchReport}">
+            <td>{{report.user.name}}</td>
+            <td><a href="#!/reports/{{report._id}}">{{report.reportType.type}}</a>
+            </td>
+            <td><a href="#!/reports/{{report._id}}">{{report.reportType.title}}</a>
+            </td>
+            <td>{{report.value}}</td>
+            <td>{{report.updated | date:'medium'}}</td>
+            <td>
+                <span>
+                    <a class="btn" href="/#!/reports/{{report._id}}/edit">
                         <i class="glyphicon glyphicon-edit"></i>
-            </a>/<a class="btn" data-ng-click="remove(report);">
+                    </a>/
+                    <a class="btn" data-ng-click="remove(report);">
                         <i class="glyphicon glyphicon-trash"></i>
-                    </a></span>
-		</td>
-	 </tr>
-   </table>
+                    </a>
+                </span>
+            </td>
+        </tr>
+    </table>
     <!--<ul class="reports unstyled">
         <li data-ng-repeat="report in reports |filter:searchReport">
             <span>{{report.created | date:'medium'}}</span> /
@@ -36,5 +51,6 @@
             <div>{{report.value}}</div>
         </li>
     </ul>-->
-    <h1 data-ng-hide="!reports || reports.length">No reports yet. <br> Why don't you <a href="/#!/reports/create">Create One</a>?</h1>
+    <h1 data-ng-hide="!reports || reports.length">No reports yet.
+        <br>Why don't you <a href="/#!/reports/create">Create One</a>?</h1>
 </section>

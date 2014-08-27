@@ -1,5 +1,5 @@
 <section data-ng-controller="ReportTypesController" data-ng-init="findOne()">
-    <span>{{reportType.created | date:'medium'}}</span> /
+    <span>{{reportType.created | date:'medium'}}</span>/
     <span>{{reportType.user.name}}</span>
     <h2>{{reportType.type}} - {{reportType.title}}</h2>
     <div data-ng-if="hasAuthorization(reportType)">

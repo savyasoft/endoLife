@@ -1,31 +1,21 @@
 <section data-ng-controller="ReportsController" data-ng-init="findOne()">
-    <div> <h3>{{report.user.name}}
-    <span align="right">      
-     <a class="btn" href="/#!/reports/{{report._id}}/edit">
-            <i class="glyphicon glyphicon-edit"></i>
-        </a>
-        <a class="btn" data-ng-click="remove(report);">
-            <i class="glyphicon glyphicon-trash"></i>
-        </a> </span></h3>
-    <table summary="" class="table table-bordered" >
-    <tr><th>created time</th><td>{{report.created | date:'medium'}}</td></tr>
-    <tr><th>last updated time</th><td>{{report.updated|date:'medium'}}</td></tr>
-    <tr><th>report type</th><td>{{report.reportType.type}}</td></tr>
-    <tr><th>report title</th><td>{{report.reportType.title}}</td></tr>
-    <tr><th>value</th><td>{{report.value}}</td></tr>    
-    </table>
-    <!--<span>{{report.created | date:'medium'}}</span> /
-    <span>{{report.user.name}}</span>
-    <h2>{{report.reportType.type}} - {{report.reportType.title}}</h2>
-    <div data-ng-if="hasAuthorization(report)">
-        <a class="btn" href="/#!/reports/{{report._id}}/edit">
-            <i class="glyphicon glyphicon-edit"></i>
-        </a>
-        <a class="btn" data-ng-click="remove(report);">
-            <i class="glyphicon glyphicon-trash"></i>
-        </a>
-    </div>
-    <div>{{report.value}}</div>
--->    
+    <div> 
+       <h3>{{report.user.name}}
+         <span align="right">      
+           <a class="btn" href="/#!/reports/{{report._id}}/edit">
+             <i class="glyphicon glyphicon-edit"></i>
+           </a>
+           <a class="btn" data-ng-click="remove(report);">
+             <i class="glyphicon glyphicon-trash"></i> 
+           </a> 
+         </span>
+       </h3>
+       <table summary="" class="table table-bordered" >
+    	   <tr><th>created time</th><td>{{report.created | date:'medium'}}</td></tr>
+    	   <tr><th>last updated time</th><td>{{report.updated|date:'medium'}}</td></tr>
+    	   <tr><th>report type</th><td>{{report.reportType.type}}</td></tr>
+    	   <tr><th>report title</th><td>{{report.reportType.title}}</td></tr>
+    	   <tr><th>value</th><td>{{report.value}}</td></tr>    
+       </table>
     </div>
 </section>
